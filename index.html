@@ -1,13 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>AKRFS Scenario Generator</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
-  <link rel="icon" href="favicon.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKRFS Scenario Generator</title>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="assets/apple-touch-icon.png" sizes="180x180" rel="apple-touch-icon">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js" integrity="sha512-cdV6j5t5o24hkSciVrb8Ki6FveC2SgwGfLE31+ZQRHAeSRxYhAQskLkq3dLm8ZcWe1N3vBOEYmmbhzf7NTtFFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="assets/js/generator.js"></script>
+
 </head>
-<body>
-  <h1>AKRFS Aircraft Scenario Generator</h1>
+<body onload="move()">
+    <div id="preloader">
+        <div id="percent">1%</div>
+        <div id="bar">
+            <div id="barconfrm"></div>
+        </div>
+
+    </div>
+    <div class="container">
+      <div class="title">AKRFS Aviation Scenario Generator</div>
+
+      <div class="scenario">
+        <div id="state">Emergency State</div>
+        <div class="label">Runway:</div>
+        <div class="value" id="location">Unknown</div>
+        <div class="label">Aircraft Type:</div>
+        <div class="value" id="aircraft">Unknown</div>
+        <div class="label">Nature of Trouble:</div>
+        <div class="value"  id="n-o-t">Unknown</div>
+        <div class="label">P.O.B:</div>
+        <div class="value"  id="p-o-b">Unknown</div>
+        <div class="label">Fuel:</div>
+        <div class="value"  id="fuel">Unknown</div>
+        <div class="label">Dangerous Goods:</div>
+        <div class="value"  id="d-g">Unknown</div>
+      </div>
+
+    <!-- Animations-->
+    <script>
+        const tll = gsap.timeline({
+            paused: "true"
+        });
+        tll.to("#percent, #bar",{
+          delay: .25,
+          duration:.8,
+          ease: Power4.inOut,
+          opacity: 0,
+          y: 20,
+          zIndex: -1
+        });
+        tll.to("#preloader",{
+          duration: 0.2,
+          opacity: 0
+        });
+        tll.from(".title",{
+          duration: .75,
+          delay: .1,
+          ease: Power4.inOut,
+          opacity: 0,
+          y: -20
+        });
+        tll.from("#state",{
+          duration: .5,
+          ease: Power4.inOut,
+          opacity: 0,
+          x: -20
+        });
+        tll.from(".label",{
+          duration: .5,
+          stagger: .1,
+          ease: Power4.inOut,
+          opacity: 0,
+          x: -20
+        },"-=.2");
+        tll.from(".value",{
+          duration: .5,
+          stagger: .1,
+          ease: Power4.inOut,
+          opacity: 0,
+          x: -20
+        }, "-=1");
+
+        var width = 1;
+        var bar = document.getElementById("barconfrm");
+        var id;
+        function move(){
+            id = setInterval(frame,10);
+
+        }
+        function frame(){
+            if(width>=100){
+                clearInterval(id);
+                tll.play();
+            }
+            else{
+                width++;
+                bar.style.width = width + "%";
+                document.getElementById("percent").innerHTML = width + "%";
+            }
+        }
+    </script>
 </body>
 </html>
